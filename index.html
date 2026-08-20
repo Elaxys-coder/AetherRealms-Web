@@ -4,95 +4,116 @@
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>AetherRealms - Serveur Minecraft</title>
+     <title>AetherRealms — Serveur Minecraft & Discord</title>
      <link rel="stylesheet" href="style.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
 
-     <!-- Barre de Navigation -->
-     <nav class="navbar">
-          <div class="logo">AetherRealms</div>
-          <ul class="nav-links">
-               <li><a href="#hero">Accueil</a></li>
-               <li><a href="#status">Statut</a></li>
-               <li><a href="#features">Fonctionnalités</a></li>
-               <li><a href="#vote">Vote & Récompenses</a></li>
-          </ul>
-     </nav>
-
-     <!-- Section d'accueil (Hero) -->
-     <header id="hero" class="hero">
-          <div class="hero-content">
-               <h1>Bienvenue sur AetherRealms</h1>
-               <p>Plonge dans une aventure Survival / Semi-RP inédite avec une communauté passionnée !</p>
-
-               <div class="hero-buttons">
-                    <button class="btn btn-primary" onclick="copyServerIP()">
-                         📋 Copier l'IP : <span id="server-ip">play.aetherrealms.net</span>
-                    </button>
-                    <a href="#vote" class="btn btn-secondary">Voter pour le serveur</a>
-               </div>
+     <!-- Navigation Header -->
+     <header>
+          <div class="logo">
+               <i class="fa-solid fa-cube logo-icon"></i>
+               <span>AetherRealms</span>
           </div>
+          <nav>
+               <a href="#accueil"><i class="fa-solid fa-house"></i> Accueil</a>
+               <a href="#statut"><i class="fa-solid fa-server"></i> Statut</a>
+               <a href="#features"><i class="fa-solid fa-star"></i> Gameplay</a>
+               <a href="#voter"><i class="fa-solid fa-check-to-slot"></i> Voter</a>
+               <a href="https://discord.gg/TON_LIEN_DISCORD" target="_blank" class="btn-discord">
+                    <i class="fa-brands fa-discord"></i> Discord
+               </a>
+          </nav>
      </header>
 
-     <main class="container">
-          <!-- Section Statut du Serveur en Direct -->
-          <section id="status" class="section">
-               <h2>Statut du Serveur en Direct</h2>
-               <div class="server-status-card">
-                    <div class="status-header">
-                         <span id="status-indicator" class="indicator offline"></span>
-                         <span id="status-text">Vérification du statut...</span>
+     <!-- Hero Section -->
+     <section id="accueil" class="hero">
+          <div class="hero-content">
+               <h1>Bienvenue sur <span>AetherRealms</span></h1>
+               <p>Aventure Survie & Semi-RP • 23 Rangs • Économie Rotative & Quêtes</p>
+
+               <div class="ip-box" onclick="copyIP()">
+                    <span id="server-ip">play.aetherrealms.net</span>
+                    <button class="btn-copy"><i class="fa-regular fa-copy"></i> Copier l'IP</button>
+               </div>
+               <div id="copy-message" class="copy-message">IP copiée dans le presse-papier !</div>
+          </div>
+     </section>
+
+     <!-- Statut API en Direct -->
+     <section id="statut" class="status-section">
+          <h2><i class="fa-solid fa-chart-line"></i> En direct du serveur</h2>
+
+          <div class="status-card">
+               <div class="status-header">
+                    <span class="status-indicator" id="status-indicator"></span>
+                    <span id="status-text">Vérification du serveur...</span>
+               </div>
+
+               <div class="status-details">
+                    <div class="stat-item">
+                         <i class="fa-solid fa-users"></i>
+                         <div>
+                              <span class="stat-value" id="players-count">- / -</span>
+                              <span class="stat-label">Joueurs en ligne</span>
+                         </div>
                     </div>
-                    <div class="status-details">
-                         <p id="player-count">Joueurs en ligne : --/--</p>
-                         <p class="ping" id="ping-display">Ping : -- ms</p>
+                    <div class="stat-item">
+                         <i class="fa-solid fa-bolt"></i>
+                         <div>
+                              <span class="stat-value" id="ping-ms">- ms</span>
+                              <span class="stat-label">Latence</span>
+                         </div>
                     </div>
                </div>
-          </section>
 
-          <!-- Section Fonctionnalités In-Game -->
-          <section id="features" class="section">
-               <h2>Nos Fonctionnalités</h2>
-               <div class="grid">
-                    <div class="card">
-                         <h3>⚔️ Quêtes Exclusives</h3>
-                         <p>Accomplis des quêtes quotidiennes et hebdomadaires pour débloquer des équipements uniques et
-                              de l'expérience.</p>
-                    </div>
-                    <div class="card">
-                         <h3>💰 Économie Joueur</h3>
-                         <p>Crée tes propres magasins, échange avec les autres joueurs et domine l'hôtel des ventes du
-                              serveur.</p>
-                    </div>
-                    <div class="card">
-                         <h3>👑 Rangs & Progression</h3>
-                         <p>Monte en grade en jeu uniquement grâce à tes efforts et ton temps de jeu, sans débourser un
-                              centime.</p>
-                    </div>
+               <div class="players-list-box">
+                    <h3>Joueurs connectés :</h3>
+                    <ul id="players-list">
+                         <li>Chargement...</li>
+                    </ul>
                </div>
-          </section>
+          </div>
+     </section>
 
-          <!-- Section Vote & Récompenses -->
-          <section id="vote" class="section">
-               <h2>Soutiens le Serveur par le Vote</h2>
-               <p>Vote chaque jour pour recevoir des clés de coffres, de la monnaie virtuelle et faire monter le serveur
-                    dans le classement !</p>
-               <div class="vote-container">
-                    <button class="btn btn-vote" onclick="alert('Lien de vote bientôt disponible !')">Voter sur
-                         Serveurs-Minecraft.org</button>
+     <!-- Fonctionnalités du Serveur -->
+     <section id="features" class="features-section">
+          <h2><i class="fa-solid fa-shield-halved"></i> Fonctionnalités In-Game</h2>
+          <div class="features-grid">
+               <div class="feature-card">
+                    <i class="fa-solid fa-ranking-star"></i>
+                    <h3>23 Rangs Évolutifs</h3>
+                    <p>Montez en niveau en jeu grâce à votre farm et débloquez de nouvelles compétences exclusives.</p>
                </div>
-          </section>
-     </main>
+               <div class="feature-card">
+                    <i class="fa-solid fa-coins"></i>
+                    <h3>Économie Rotative</h3>
+                    <p>Un système de shop dynamique et d'Hôtel des Ventes géré à 100% par les joueurs.</p>
+               </div>
+               <div class="feature-card">
+                    <i class="fa-solid fa-scroll"></i>
+                    <h3>Quêtes & Donjons</h3>
+                    <p>Remplissez des parchemins de quêtes et affrontez des boss pour obtenir des récompenses rares.</p>
+               </div>
+          </div>
+     </section>
 
-     <!-- Pied de page -->
+     <!-- Espace de Vote & Récompenses -->
+     <section id="voter" class="vote-section">
+          <h2><i class="fa-solid fa-gift"></i> Soutenir & Voter</h2>
+          <p>Votez toutes les 1h30 pour gagner des clés de vote et débloquer du stuff exclusif en jeu !</p>
+          <div class="vote-box">
+               <input type="text" id="vote-pseudo" placeholder="Entrez votre pseudo Minecraft...">
+               <button onclick="sendVote()" class="btn-vote">Voter maintenant</button>
+          </div>
+          <div id="vote-response" class="vote-response"></div>
+     </section>
+
      <footer>
-          <p>&copy; 2026 AetherRealms. Tous droits réservés. Non affilié à Mojang Studios.</p>
+          <p>&copy; 2026 AetherRealms. Propulsé par AetherBot.</p>
      </footer>
-
-     <!-- Notification Toast pour la copie d'IP -->
-     <div id="toast" class="toast">IP copiée dans le presse-papier !</div>
 
      <script src="script.js"></script>
 </body>
