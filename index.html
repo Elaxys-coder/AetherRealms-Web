@@ -9,26 +9,89 @@
 </head>
 
 <body>
-     <header class="hero">
-          <div class="overlay">
-               <h1>AetherRealms</h1>
-               <p>Rejoins une aventure Minecraft unique !</p>
 
+     <!-- Barre de Navigation -->
+     <nav class="navbar">
+          <div class="logo">AetherRealms</div>
+          <ul class="nav-links">
+               <li><a href="#hero">Accueil</a></li>
+               <li><a href="#status">Statut</a></li>
+               <li><a href="#features">Fonctionnalités</a></li>
+               <li><a href="#vote">Vote & Récompenses</a></li>
+          </ul>
+     </nav>
+
+     <!-- Section d'accueil (Hero) -->
+     <header id="hero" class="hero">
+          <div class="hero-content">
+               <h1>Bienvenue sur AetherRealms</h1>
+               <p>Plonge dans une aventure Survival / Semi-RP inédite avec une communauté passionnée !</p>
+
+               <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="copyServerIP()">
+                         📋 Copier l'IP : <span id="server-ip">play.aetherrealms.net</span>
+                    </button>
+                    <a href="#vote" class="btn btn-secondary">Voter pour le serveur</a>
+               </div>
+          </div>
+     </header>
+
+     <main class="container">
+          <!-- Section Statut du Serveur en Direct -->
+          <section id="status" class="section">
+               <h2>Statut du Serveur en Direct</h2>
                <div class="server-status-card">
                     <div class="status-header">
                          <span id="status-indicator" class="indicator offline"></span>
                          <span id="status-text">Vérification du statut...</span>
                     </div>
-                    <p id="player-count">Joueurs en ligne : --/--</p>
-                    <div class="ping" id="ping-display">Ping : -- ms</div>
+                    <div class="status-details">
+                         <p id="player-count">Joueurs en ligne : --/--</p>
+                         <p class="ping" id="ping-display">Ping : -- ms</p>
+                    </div>
                </div>
+          </section>
 
-               <button class="ip-btn" onclick="copyServerIP()">
-                    📋 Copier l'IP : <span id="server-ip">play.aetherrealms.net</span>
-               </button>
-          </div>
-     </header>
+          <!-- Section Fonctionnalités In-Game -->
+          <section id="features" class="section">
+               <h2>Nos Fonctionnalités</h2>
+               <div class="grid">
+                    <div class="card">
+                         <h3>⚔️ Quêtes Exclusives</h3>
+                         <p>Accomplis des quêtes quotidiennes et hebdomadaires pour débloquer des équipements uniques et
+                              de l'expérience.</p>
+                    </div>
+                    <div class="card">
+                         <h3>💰 Économie Joueur</h3>
+                         <p>Crée tes propres magasins, échange avec les autres joueurs et domine l'hôtel des ventes du
+                              serveur.</p>
+                    </div>
+                    <div class="card">
+                         <h3>👑 Rangs & Progression</h3>
+                         <p>Monte en grade en jeu uniquement grâce à tes efforts et ton temps de jeu, sans débourser un
+                              centime.</p>
+                    </div>
+               </div>
+          </section>
 
+          <!-- Section Vote & Récompenses -->
+          <section id="vote" class="section">
+               <h2>Soutiens le Serveur par le Vote</h2>
+               <p>Vote chaque jour pour recevoir des clés de coffres, de la monnaie virtuelle et faire monter le serveur
+                    dans le classement !</p>
+               <div class="vote-container">
+                    <button class="btn btn-vote" onclick="alert('Lien de vote bientôt disponible !')">Voter sur
+                         Serveurs-Minecraft.org</button>
+               </div>
+          </section>
+     </main>
+
+     <!-- Pied de page -->
+     <footer>
+          <p>&copy; 2026 AetherRealms. Tous droits réservés. Non affilié à Mojang Studios.</p>
+     </footer>
+
+     <!-- Notification Toast pour la copie d'IP -->
      <div id="toast" class="toast">IP copiée dans le presse-papier !</div>
 
      <script src="script.js"></script>

@@ -1,5 +1,5 @@
-const API_URL = "https://aetherbot-4yok.onrender.com/";
-
+// Remplace par l'URL fournie par Render une fois ton bot déployé
+const API_URL = "https://aetherbot.onrender.com/api/status";
 
 async function fetchServerStatus() {
      try {
