@@ -1,4 +1,4 @@
-const API_URL = "https://aetherbot.onrender.com/api/status";
+const API_URL = "https://aetherbot-4yok.onrender.com/";
 
 function copyIP() {
      const ipText = document.getElementById("server-ip").innerText;
