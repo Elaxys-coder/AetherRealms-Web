@@ -5,24 +5,42 @@
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>AetherRealms — Serveur Minecraft & Discord</title>
+     <meta name="description" content="AetherRealms — serveur Minecraft Survie & Semi-RP. 23 rangs, économie rotative, quêtes et donjons. Rejoignez l'aventure.">
      <link rel="stylesheet" href="style.css">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
 
+     <canvas id="starfield"></canvas>
+
+     <!-- Symbole cristal réutilisé dans tout le site -->
+     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+          <defs>
+               <linearGradient id="crystal-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#3fe8c4" />
+                    <stop offset="100%" stop-color="#7c4fe0" />
+               </linearGradient>
+               <symbol id="crystal-icon" viewBox="0 0 64 64">
+                    <path d="M32 4 L54 24 L32 60 L10 24 Z" fill="url(#crystal-gradient)" stroke="#d9b568" stroke-width="1.5" stroke-linejoin="round" />
+                    <path d="M10 24 L32 34 L54 24 M32 4 L32 34 M32 34 L32 60" fill="none" stroke="#0a0714" stroke-width="1" stroke-opacity="0.35" />
+               </symbol>
+          </defs>
+     </svg>
+
      <!-- Navigation Header -->
      <header>
           <div class="logo">
-               <i class="fa-solid fa-cube logo-icon"></i>
+               <svg class="icon-crystal"><use href="#crystal-icon"></use></svg>
                <span>AetherRealms</span>
           </div>
           <nav>
-               <a href="#accueil"><i class="fa-solid fa-house"></i> Accueil</a>
-               <a href="#statut"><i class="fa-solid fa-server"></i> Statut</a>
-               <a href="#features"><i class="fa-solid fa-star"></i> Gameplay</a>
-               <a href="#voter"><i class="fa-solid fa-check-to-slot"></i> Voter</a>
-               <a href="https://discord.gg/TON_LIEN_DISCORD" target="_blank" class="btn-discord">
+               <a href="#accueil"><i class="fa-solid fa-house"></i> <span>Accueil</span></a>
+               <a href="#univers"><i class="fa-solid fa-globe"></i> <span>Univers</span></a>
+               <a href="#statut"><i class="fa-solid fa-server"></i> <span>Statut</span></a>
+               <a href="#features"><i class="fa-solid fa-star"></i> <span>Gameplay</span></a>
+               <a href="#voter"><i class="fa-solid fa-check-to-slot"></i> <span>Voter</span></a>
+               <a href="https://discord.gg/ZE5xQhPeA8" target="_blank" class="btn-discord">
                     <i class="fa-brands fa-discord"></i> Discord
                </a>
           </nav>
@@ -31,22 +49,64 @@
      <!-- Hero Section -->
      <section id="accueil" class="hero">
           <div class="hero-content">
+               <svg class="hero-glyph"><use href="#crystal-icon"></use></svg>
+               <span class="hero-eyebrow">Survie • Semi-RP</span>
                <h1>Bienvenue sur <span>AetherRealms</span></h1>
-               <p>Aventure Survie & Semi-RP • 23 Rangs • Économie Rotative & Quêtes</p>
+               <p>23 Rangs évolutifs • Économie rotative & Hôtel des Ventes • Quêtes et donjons</p>
 
-               <div class="ip-box" onclick="copyIP()">
-                    <span id="server-ip">play.aetherrealms.net</span>
+               <div class="ip-box hud-frame" onclick="copyIP()">
+                    <span id="server-ip">aetherrealms.servegame.com:26878</span>
                     <button class="btn-copy"><i class="fa-regular fa-copy"></i> Copier l'IP</button>
                </div>
                <div id="copy-message" class="copy-message">IP copiée dans le presse-papier !</div>
           </div>
      </section>
 
-     <!-- Statut API en Direct -->
-     <section id="statut" class="status-section">
-          <h2><i class="fa-solid fa-chart-line"></i> En direct du serveur</h2>
+     <!-- L'Univers du serveur -->
+     <section id="univers" class="realms-section reveal">
+          <h2><i class="fa-solid fa-globe"></i> L'Univers d'AetherRealms</h2>
+          <div class="divider" aria-hidden="true"></div>
+          <p class="realms-intro">Quatre royaumes flottants gravitent autour d'un hub central, reliés par un réseau de rails suspendus. Chaque région propose ses propres biomes, ressources et ambiances.</p>
 
-          <div class="status-card">
+          <div class="realms-map-frame hud-frame">
+               <img src="astral-map-bg.jpg" alt="Carte du monde AetherRealms : quatre royaumes flottants autour d'un hub central" loading="lazy">
+          </div>
+
+          <div class="realms-grid">
+               <div class="realm-card">
+                    <div class="realm-icon"><i class="fa-solid fa-sun"></i></div>
+                    <h3>Ouest</h3>
+                    <p>Canyons de grès rouge, savanes arides et usines à moulins à vent.</p>
+               </div>
+               <div class="realm-card">
+                    <div class="realm-icon"><i class="fa-solid fa-snowflake"></i></div>
+                    <h3>Nord</h3>
+                    <p>Taïgas enneigées d'érables, lacs gelés et chalets de montagne.</p>
+               </div>
+               <div class="realm-card">
+                    <div class="realm-icon"><i class="fa-solid fa-spa"></i></div>
+                    <h3>Est</h3>
+                    <p>Forêts de fleurs de cerisier, jacarandas, fermes et ruchers.</p>
+               </div>
+               <div class="realm-card">
+                    <div class="realm-icon"><i class="fa-solid fa-fire"></i></div>
+                    <h3>Sud</h3>
+                    <p>Grottes de soufre, canyons d'obsidienne et cités anciennes.</p>
+               </div>
+               <div class="realm-card hub">
+                    <div class="realm-icon"><i class="fa-solid fa-compass"></i></div>
+                    <h3>Hub Central</h3>
+                    <p>Observatoire céleste, spawn sécurisé, marché aux PNJ, gare à 4 départs.</p>
+               </div>
+          </div>
+     </section>
+
+     <!-- Statut API en Direct -->
+     <section id="statut" class="status-section reveal">
+          <h2><i class="fa-solid fa-chart-line"></i> En direct du serveur</h2>
+          <div class="divider" aria-hidden="true"></div>
+
+          <div class="status-card hud-frame">
                <div class="status-header">
                     <span class="status-indicator" id="status-indicator"></span>
                     <span id="status-text">Vérification du serveur...</span>
@@ -70,7 +130,7 @@
                </div>
 
                <div class="players-list-box">
-                    <h3>Joueurs connectés :</h3>
+                    <h3>Joueurs connectés</h3>
                     <ul id="players-list">
                          <li>Chargement...</li>
                     </ul>
@@ -79,8 +139,9 @@
      </section>
 
      <!-- Fonctionnalités du Serveur -->
-     <section id="features" class="features-section">
+     <section id="features" class="features-section reveal">
           <h2><i class="fa-solid fa-shield-halved"></i> Fonctionnalités In-Game</h2>
+          <div class="divider" aria-hidden="true"></div>
           <div class="features-grid">
                <div class="feature-card">
                     <i class="fa-solid fa-ranking-star"></i>
@@ -101,10 +162,12 @@
      </section>
 
      <!-- Espace de Vote & Récompenses -->
-     <section id="voter" class="vote-section">
+     <section id="voter" class="vote-section reveal">
+          <svg class="vote-glyph"><use href="#crystal-icon"></use></svg>
           <h2><i class="fa-solid fa-gift"></i> Soutenir & Voter</h2>
-          <p>Votez toutes les 1h30 pour gagner des clés de vote et débloquer du stuff exclusif en jeu !</p>
-          <div class="vote-box">
+          <div class="divider" aria-hidden="true"></div>
+          <p class="vote-copy">Votez toutes les 1h30 pour gagner des clés de vote et débloquer du stuff exclusif en jeu !</p>
+          <div class="vote-box hud-frame">
                <input type="text" id="vote-pseudo" placeholder="Entrez votre pseudo Minecraft...">
                <button onclick="sendVote()" class="btn-vote">Voter maintenant</button>
           </div>
@@ -112,7 +175,8 @@
      </section>
 
      <footer>
-          <p>&copy; 2026 AetherRealms. Propulsé par AetherBot.</p>
+          <svg class="icon-crystal"><use href="#crystal-icon"></use></svg>
+          <p>&copy; 2026 AetherRealms. Propulsé par Elaxys.</p>
      </footer>
 
      <script src="script.js"></script>

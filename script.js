@@ -70,3 +70,77 @@ function sendVote() {
 // Lancement automatique au chargement et actualisation toutes les 15 secondes
 fetchServerStatus();
 setInterval(fetchServerStatus, 15000);
+
+// ---------------------------------------------------------------------
+// Fond étoilé ambiant (décoratif, désactivé si "reduced motion")
+// ---------------------------------------------------------------------
+function initStarfield() {
+     const canvas = document.getElementById("starfield");
+     if (!canvas) return;
+     const ctx = canvas.getContext("2d");
+     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+     let stars = [];
+     let width, height;
+
+     function resize() {
+          width = canvas.width = window.innerWidth;
+          height = canvas.height = window.innerHeight;
+          const count = Math.floor((width * height) / 9000);
+          stars = Array.from({ length: count }, () => ({
+               x: Math.random() * width,
+               y: Math.random() * height,
+               r: Math.random() * 1.2 + 0.3,
+               speed: Math.random() * 0.06 + 0.02,
+               twinkle: Math.random() * Math.PI * 2,
+               color: Math.random() > 0.85 ? "63,232,196" : "241,236,251"
+          }));
+     }
+
+     function draw() {
+          ctx.clearRect(0, 0, width, height);
+          stars.forEach(s => {
+               s.twinkle += 0.02;
+               const alpha = 0.35 + Math.sin(s.twinkle) * 0.35;
+               ctx.beginPath();
+               ctx.fillStyle = `rgba(${s.color},${Math.max(alpha, 0.1)})`;
+               ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+               ctx.fill();
+               if (!prefersReducedMotion) {
+                    s.y += s.speed;
+                    if (s.y > height) s.y = 0;
+               }
+          });
+          requestAnimationFrame(draw);
+     }
+
+     window.addEventListener("resize", resize);
+     resize();
+     draw();
+}
+
+// ---------------------------------------------------------------------
+// Apparition en fondu des sections au scroll
+// ---------------------------------------------------------------------
+function initRevealOnScroll() {
+     const targets = document.querySelectorAll(".reveal");
+     if (!targets.length) return;
+
+     if (!("IntersectionObserver" in window)) {
+          targets.forEach(el => el.classList.add("in-view"));
+          return;
+     }
+
+     const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+               if (entry.isIntersecting) {
+                    entry.target.classList.add("in-view");
+                    observer.unobserve(entry.target);
+               }
+          });
+     }, { threshold: 0.15 });
+
+     targets.forEach(el => observer.observe(el));
+}
+
+initStarfield();
+initRevealOnScroll();
