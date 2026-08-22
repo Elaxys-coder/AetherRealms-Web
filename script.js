@@ -144,3 +144,19 @@ function initRevealOnScroll() {
 
 initStarfield();
 initRevealOnScroll();
+
+// Ajoute { cache: 'no-store' } pour forcer le site à demander l'état réel instantanément
+async function checkStatus() {
+  try {
+    const response = await fetch('https://TON-BOT-RENDER.onrender.com/api/status', {
+      cache: 'no-store'
+    });
+    const data = await response.json();
+    console.log("Statut du serveur:", data);
+  } catch (error) {
+    console.error("Erreur de connexion à l'API", error);
+  }
+}
+
+// Effectue une vérification toutes les 15 ou 30 secondes quand la page est ouverte
+setInterval(checkStatus, 20000); // 20 secondes
