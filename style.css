@@ -613,6 +613,161 @@ h2 i {
      color: var(--text-main);
 }
 
+/* Métadonnées serveur (version, spawn) */
+.server-meta {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 10px;
+     margin-top: 22px;
+     padding-top: 22px;
+     border-top: 1px solid var(--line);
+}
+
+.meta-chip {
+     display: inline-flex;
+     align-items: center;
+     gap: 8px;
+     font-family: var(--font-mono);
+     font-size: 0.78rem;
+     color: var(--text-muted);
+     background: rgba(216, 180, 108, 0.08);
+     border: 1px solid var(--line);
+     padding: 6px 12px;
+     border-radius: 6px;
+}
+
+.meta-chip i {
+     color: var(--gold);
+}
+
+/* Liste de joueurs avec têtes de skin */
+.players-list li.player-chip {
+     display: inline-flex;
+     align-items: center;
+     gap: 8px;
+     padding: 4px 12px 4px 6px;
+}
+
+.players-list .player-head {
+     width: 20px;
+     height: 20px;
+     border-radius: 3px;
+     image-rendering: pixelated;
+}
+
+/* ==========================================================================
+   Communauté Discord
+   ========================================================================== */
+
+.discord-section {
+     text-align: center;
+}
+
+.discord-card {
+     background-color: var(--panel);
+     backdrop-filter: blur(6px);
+     border-radius: var(--radius);
+     padding: 34px;
+     border: 1px solid var(--line);
+     margin-bottom: 24px;
+     text-align: left;
+}
+
+.discord-header {
+     display: flex;
+     align-items: center;
+     gap: 13px;
+     font-family: var(--font-mono);
+     font-size: 1.05rem;
+     font-weight: 700;
+     margin-bottom: 24px;
+}
+
+.discord-stats {
+     display: flex;
+     justify-content: center;
+     margin-bottom: 24px;
+     padding-bottom: 24px;
+     border-bottom: 1px solid var(--line);
+}
+
+.discord-members-box h3 {
+     font-family: var(--font-mono);
+     font-size: 0.82rem;
+     text-transform: uppercase;
+     letter-spacing: 0.1em;
+     margin-bottom: 14px;
+     color: var(--text-muted);
+     text-align: left;
+}
+
+.discord-members-list {
+     list-style: none;
+     display: flex;
+     flex-wrap: wrap;
+     gap: 10px;
+     margin-bottom: 26px;
+}
+
+.discord-members-list li {
+     display: inline-flex;
+     align-items: center;
+     gap: 8px;
+     background: rgba(124, 79, 224, 0.12);
+     border: 1px solid rgba(166, 132, 255, 0.22);
+     padding: 5px 14px 5px 6px;
+     border-radius: 20px;
+     font-size: 0.85rem;
+     color: var(--text-main);
+}
+
+.discord-members-list img {
+     width: 22px;
+     height: 22px;
+     border-radius: 50%;
+}
+
+.discord-join-btn {
+     display: inline-flex;
+     margin: 0 auto;
+     justify-content: center;
+}
+
+.link-account-box {
+     display: flex;
+     align-items: center;
+     gap: 18px;
+     text-align: left;
+     background: var(--panel-solid);
+     border: 1px solid var(--line);
+     border-radius: var(--radius);
+     padding: 24px 28px;
+     flex-wrap: wrap;
+}
+
+.link-account-box > i {
+     font-size: 1.6rem;
+     color: var(--gold);
+     flex-shrink: 0;
+}
+
+.link-account-text {
+     flex: 1;
+     min-width: 200px;
+}
+
+.link-account-text h3 {
+     font-family: var(--font-display);
+     font-size: 1rem;
+     margin-bottom: 6px;
+     color: var(--gold-bright);
+}
+
+.link-account-text p {
+     color: var(--text-muted);
+     font-size: 0.9rem;
+}
+
 /* ==========================================================================
    Features Grid
    ========================================================================== */
@@ -749,6 +904,20 @@ h2 i {
      font-size: 0.92rem;
      font-weight: 700;
      min-height: 1.4em;
+}
+
+.vote-soon-note {
+     margin-top: 22px;
+     color: var(--text-faint);
+     font-size: 0.82rem;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     gap: 8px;
+}
+
+.vote-soon-note i {
+     color: var(--gold);
 }
 
 /* ==========================================================================

@@ -6,6 +6,9 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>AetherRealms — Serveur Minecraft & Discord</title>
      <meta name="description" content="AetherRealms — serveur Minecraft Survie & Semi-RP. 23 rangs, économie rotative, quêtes et donjons. Rejoignez l'aventure.">
+     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+     <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
      <link rel="stylesheet" href="style.css">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -38,9 +41,10 @@
                <a href="#accueil"><i class="fa-solid fa-house"></i> <span>Accueil</span></a>
                <a href="#univers"><i class="fa-solid fa-globe"></i> <span>Univers</span></a>
                <a href="#statut"><i class="fa-solid fa-server"></i> <span>Statut</span></a>
+               <a href="#communaute"><i class="fa-brands fa-discord"></i> <span>Communauté</span></a>
                <a href="#features"><i class="fa-solid fa-star"></i> <span>Gameplay</span></a>
                <a href="#voter"><i class="fa-solid fa-check-to-slot"></i> <span>Voter</span></a>
-               <a href="https://discord.gg/ZE5xQhPeA8" target="_blank" class="btn-discord">
+               <a href="https://discord.gg/TON_LIEN_DISCORD" target="_blank" class="btn-discord">
                     <i class="fa-brands fa-discord"></i> Discord
                </a>
           </nav>
@@ -55,7 +59,7 @@
                <p>23 Rangs évolutifs • Économie rotative & Hôtel des Ventes • Quêtes et donjons</p>
 
                <div class="ip-box hud-frame" onclick="copyIP()">
-                    <span id="server-ip">aetherrealms.servegame.com:26878</span>
+                    <span id="server-ip">play.aetherrealms.net</span>
                     <button class="btn-copy"><i class="fa-regular fa-copy"></i> Copier l'IP</button>
                </div>
                <div id="copy-message" class="copy-message">IP copiée dans le presse-papier !</div>
@@ -131,10 +135,58 @@
 
                <div class="players-list-box">
                     <h3>Joueurs connectés</h3>
-                    <ul id="players-list">
+                    <ul id="players-list" class="players-list">
                          <li>Chargement...</li>
                     </ul>
                </div>
+
+               <div class="server-meta">
+                    <span class="meta-chip"><i class="fa-solid fa-code-branch"></i> 1.20.1 Fabric</span>
+                    <span class="meta-chip"><i class="fa-solid fa-location-dot"></i> Spawn X: -102 · Y: 94 · Z: 39</span>
+               </div>
+          </div>
+     </section>
+
+     <!-- Communauté Discord -->
+     <section id="communaute" class="discord-section reveal">
+          <h2><i class="fa-brands fa-discord"></i> Communauté Discord</h2>
+          <div class="divider" aria-hidden="true"></div>
+
+          <div class="discord-card hud-frame">
+               <div class="discord-header">
+                    <span class="status-indicator" id="discord-indicator"></span>
+                    <span id="discord-status-text">Connexion au widget Discord...</span>
+               </div>
+
+               <div class="discord-stats">
+                    <div class="stat-item">
+                         <i class="fa-brands fa-discord"></i>
+                         <div>
+                              <span class="stat-value" id="discord-online-count">-</span>
+                              <span class="stat-label">Membres en ligne</span>
+                         </div>
+                    </div>
+               </div>
+
+               <div class="discord-members-box">
+                    <h3>En ligne sur le Discord</h3>
+                    <ul id="discord-members-list" class="discord-members-list">
+                         <li>Chargement...</li>
+                    </ul>
+               </div>
+
+               <a id="discord-invite-btn" href="https://discord.gg/TON_LIEN_DISCORD" target="_blank" class="btn-discord discord-join-btn">
+                    <i class="fa-brands fa-discord"></i> Rejoindre le Discord
+               </a>
+          </div>
+
+          <div class="link-account-box hud-frame">
+               <i class="fa-solid fa-link"></i>
+               <div class="link-account-text">
+                    <h3>Lier ton compte</h3>
+                    <p>Liez votre compte en jeu avec la commande ci-dessous pour débloquer votre rôle sur le serveur Discord.</p>
+               </div>
+               <button class="btn-copy" onclick="copyDiscordCommand()"><i class="fa-regular fa-copy"></i> /discord link</button>
           </div>
      </section>
 
@@ -172,11 +224,12 @@
                <button onclick="sendVote()" class="btn-vote">Voter maintenant</button>
           </div>
           <div id="vote-response" class="vote-response"></div>
+          <p class="vote-soon-note"><i class="fa-solid fa-clock"></i> Les liens vers les annuaires de vote arrivent bientôt — en attendant, garde ton pseudo prêt !</p>
      </section>
 
      <footer>
           <svg class="icon-crystal"><use href="#crystal-icon"></use></svg>
-          <p>&copy; 2026 AetherRealms. Propulsé par Elaxys.</p>
+          <p>&copy; 2026 AetherRealms. Propulsé par AetherBot.</p>
      </footer>
 
      <script src="script.js"></script>

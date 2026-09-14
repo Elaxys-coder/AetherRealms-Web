@@ -1,5 +1,13 @@
+// Statut technique du serveur (en ligne / joueurs / version) via mcstatus.io
+const MCSTATUS_API_URL = "https://api.mcstatus.io/v2/status/java/aetherrealms.servegame.com:26878";
+
+// Liste des joueurs connectés (pseudos) via ton bot AetherBot sur Render
 // Remplace cette URL par celle générée par Render lors du déploiement
 const API_URL = "https://aetherbot.onrender.com/api/status";
+
+// Widget public Discord (aucun token requis, juste le Guild ID)
+const DISCORD_GUILD_ID = "1532906956195496016";
+const DISCORD_WIDGET_URL = `https://discord.com/api/guilds/${DISCORD_GUILD_ID}/widget.json`;
 
 function copyIP() {
      const ipText = document.getElementById("server-ip").innerText;
@@ -9,6 +17,25 @@ function copyIP() {
      setTimeout(() => msg.classList.remove("show"), 2000);
 }
 
+function copyDiscordCommand() {
+     navigator.clipboard.writeText("/discord link");
+     const responseBox = document.getElementById("vote-response");
+     // petit retour visuel discret via le bouton lui-même
+     const btn = event.currentTarget;
+     const original = btn.innerHTML;
+     btn.innerHTML = '<i class="fa-solid fa-check"></i> Copié !';
+     setTimeout(() => { btn.innerHTML = original; }, 1800);
+}
+
+function renderPlayerHead(pseudo) {
+     // Têtes de skin via mc-heads.net, pas besoin de résoudre l'UUID nous-mêmes
+     const safeName = encodeURIComponent(pseudo);
+     return `<img class="player-head" src="https://mc-heads.net/avatar/${safeName}/24" alt="" loading="lazy">`;
+}
+
+// ---------------------------------------------------------------------
+// Statut Minecraft (mcstatus.io pour l'état/joueurs, bot Render pour les pseudos)
+// ---------------------------------------------------------------------
 async function fetchServerStatus() {
      const indicator = document.getElementById("status-indicator");
      const statusText = document.getElementById("status-text");
@@ -17,25 +44,18 @@ async function fetchServerStatus() {
      const playersList = document.getElementById("players-list");
 
      try {
-          const response = await fetch(API_URL);
+          const started = performance.now();
+          const response = await fetch(MCSTATUS_API_URL);
           const data = await response.json();
+          const responseTime = Math.round(performance.now() - started);
 
           if (data.online) {
                indicator.className = "status-indicator online";
                statusText.innerText = "Serveur en ligne";
-               playersCount.innerText = `${data.players_online} / ${data.players_max}`;
-               pingMs.innerText = `${data.ping_ms} ms`;
-
-               playersList.innerHTML = "";
-               if (data.players_list && data.players_list.length > 0) {
-                    data.players_list.forEach(player => {
-                         const li = document.createElement("li");
-                         li.innerText = player;
-                         playersList.appendChild(li);
-                    });
-               } else {
-                    playersList.innerHTML = "<li>Aucun joueur en ligne</li>";
-               }
+               playersCount.innerText = `${data.players.online} / ${data.players.max}`;
+               // mcstatus.io ne renvoie pas de ping réseau réel : on affiche le temps de
+               // réponse de la requête, à titre indicatif.
+               pingMs.innerText = `~${responseTime} ms`;
           } else {
                throw new Error("Hors ligne");
           }
@@ -44,7 +64,70 @@ async function fetchServerStatus() {
           statusText.innerText = "Serveur Hors ligne";
           playersCount.innerText = "- / -";
           pingMs.innerText = "- ms";
-          playersList.innerHTML = "<li>Information indisponible</li>";
+     }
+
+     // La liste des pseudos vient de ton bot (AetherBot), indépendamment de mcstatus.io
+     try {
+          const botResponse = await fetch(API_URL);
+          const botData = await botResponse.json();
+
+          playersList.innerHTML = "";
+          if (botData.online && botData.players_list && botData.players_list.length > 0) {
+               botData.players_list.forEach(player => {
+                    const li = document.createElement("li");
+                    li.className = "player-chip";
+                    li.innerHTML = `${renderPlayerHead(player)}<span>${player}</span>`;
+                    playersList.appendChild(li);
+               });
+          } else {
+               playersList.innerHTML = "<li>Aucun joueur en ligne</li>";
+          }
+     } catch (error) {
+          playersList.innerHTML = "<li>Liste des joueurs indisponible</li>";
+     }
+}
+
+// ---------------------------------------------------------------------
+// Widget Discord (membres en ligne + invitation), 100% public, sans token
+// ---------------------------------------------------------------------
+async function fetchDiscordWidget() {
+     const indicator = document.getElementById("discord-indicator");
+     const statusText = document.getElementById("discord-status-text");
+     const onlineCount = document.getElementById("discord-online-count");
+     const membersList = document.getElementById("discord-members-list");
+     const inviteBtn = document.getElementById("discord-invite-btn");
+
+     try {
+          const response = await fetch(DISCORD_WIDGET_URL);
+          if (!response.ok) throw new Error("Widget Discord indisponible");
+          const data = await response.json();
+
+          indicator.className = "status-indicator online";
+          statusText.innerText = "Discord connecté";
+          onlineCount.innerText = data.presence_count ?? "-";
+
+          if (data.instant_invite) {
+               inviteBtn.href = data.instant_invite;
+          }
+
+          membersList.innerHTML = "";
+          if (data.members && data.members.length > 0) {
+               data.members.slice(0, 16).forEach(member => {
+                    const li = document.createElement("li");
+                    const avatar = member.avatar_url
+                         ? `<img src="${member.avatar_url}" alt="">`
+                         : "";
+                    li.innerHTML = `${avatar}<span>${member.username}</span>`;
+                    membersList.appendChild(li);
+               });
+          } else {
+               membersList.innerHTML = "<li>Aucun membre affiché pour le moment</li>";
+          }
+     } catch (error) {
+          indicator.className = "status-indicator offline";
+          statusText.innerText = "Widget Discord indisponible";
+          onlineCount.innerText = "-";
+          membersList.innerHTML = "<li>Active le widget dans Discord si ce n'est pas déjà fait</li>";
      }
 }
 
@@ -58,18 +141,18 @@ function sendVote() {
           return;
      }
 
+     // Les annuaires de vote (Serveurs-Minecraft.org, etc.) seront branchés dès que
+     // le nom de domaine sera en place. Pas de redirection pour le moment.
      responseBox.style.color = "var(--success-color)";
-     responseBox.innerText = `Merci ${pseudo} ! Redirection vers la page de vote...`;
-
-     // Redirection vers ton site de classement/vote
-     setTimeout(() => {
-          window.open("https://www.serveurs-minecraft.org", "_blank");
-     }, 1500);
+     responseBox.innerText = `Merci ${pseudo} ! Le vote sera bientôt activé, reviens vite.`;
 }
 
 // Lancement automatique au chargement et actualisation toutes les 15 secondes
 fetchServerStatus();
 setInterval(fetchServerStatus, 15000);
+
+fetchDiscordWidget();
+setInterval(fetchDiscordWidget, 30000);
 
 // ---------------------------------------------------------------------
 // Fond étoilé ambiant (décoratif, désactivé si "reduced motion")
@@ -144,19 +227,3 @@ function initRevealOnScroll() {
 
 initStarfield();
 initRevealOnScroll();
-
-// Ajoute { cache: 'no-store' } pour forcer le site à demander l'état réel instantanément
-async function checkStatus() {
-  try {
-    const response = await fetch('https://TON-BOT-RENDER.onrender.com/api/status', {
-      cache: 'no-store'
-    });
-    const data = await response.json();
-    console.log("Statut du serveur:", data);
-  } catch (error) {
-    console.error("Erreur de connexion à l'API", error);
-  }
-}
-
-// Effectue une vérification toutes les 15 ou 30 secondes quand la page est ouverte
-setInterval(checkStatus, 20000); // 20 secondes
